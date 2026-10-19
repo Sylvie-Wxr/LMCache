@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, TypeVar,
 import asyncio
 import functools
 import hashlib
+import mmap
 import os
 import re
 import stat
@@ -48,6 +49,24 @@ KVCache = Tuple[Tuple[torch.Tensor, torch.Tensor], ...]
 
 
 # Device utility functions
+def check_dax_offset(offset: int) -> None:
+    """Reject a negative or non-page-aligned DAX mapping offset.
+
+    Args:
+        offset: Byte offset into a Device-DAX device or backing file.
+
+    Raises:
+        ValueError: If ``offset`` is negative or not page aligned.
+    """
+    if offset < 0:
+        raise ValueError("dax offset must be >= 0")
+    if offset % mmap.ALLOCATIONGRANULARITY:
+        raise ValueError(
+            f"dax offset ({offset} bytes) must be a multiple of "
+            f"{mmap.ALLOCATIONGRANULARITY} bytes"
+        )
+
+
 def get_device_identity(source: str | int) -> tuple[bool, int, int] | None:
     """Return the physical identity of a character device or regular file.
 

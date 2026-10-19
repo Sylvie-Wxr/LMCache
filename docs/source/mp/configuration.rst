@@ -415,12 +415,15 @@ the tier restarts empty.
 **Device path and offset.** The mapping covers ``[offset, offset + size)``
 of the device, with the offset defaulting to 0. Several servers can share
 one CXL device by giving each a disjoint range: ``--l1-devdax-offset-gb``
-in the legacy form, ``offset_gb`` in the tagged form. LMCache does not
-coordinate offsets between servers; overlapping ranges, or two nodes that
-alias the same physical CXL range, write over each other. The device must
-be in ``devdax`` mode (CXL memory is often onlined as ``system-ram``), the
-range must fit within the device, and offset and size must be multiples of
-the device alignment (usually 2 MiB); a range that does not is rejected:
+in the legacy form, ``offset_gb`` in the tagged form. The ``dax`` L2 adapter
+takes the same ``offset_gb``, so one server can keep L1 and L2 on disjoint
+ranges of one device; overlapping ranges within a server are rejected.
+LMCache does not coordinate offsets between servers; overlapping ranges, or
+two nodes that alias the same physical CXL range, write over each other.
+The device must be in ``devdax`` mode (CXL memory is often onlined as
+``system-ram``), the range must fit within the device, and offset and size
+must be multiples of the device alignment (usually 2 MiB); a range that does
+not is rejected:
 
 .. code-block:: bash
 

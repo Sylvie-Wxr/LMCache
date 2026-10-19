@@ -91,14 +91,24 @@ or poll-set re-registration.
 
 Add:
 
-1. Validate `hotplug_enabled`, path, and size.
-2. Map a new `DaxCore[ObjectKey]`.
+1. Validate `hotplug_enabled`, path, size, and page-aligned `offset_bytes`
+   (default 0). The storage manager first asks every L1 and other L2 owner
+   whether it maps an overlapping range of the same physical device.
+2. Map a new `DaxCore[ObjectKey]` over `[offset, offset + size)`. The core
+   first runs `lmcache.utils.check_dax_range`, which reads the device size and
+   alignment from sysfs (`fstat` reports 0 for a character device) and rejects
+   a range that does not fit or is misaligned; the kernel would otherwise
+   accept the `mmap` and SIGBUS on first access.
 3. Append a `DaxDeviceEntry(state="active")`.
 4. Return per-device status. Existing KV entries stay on their current devices.
 
-Re-adding the same device at the same size, including through an alias, returns
-its existing entry without mapping it again. Use the returned
-`device_path` for remove or resize; the alias is not registered as another path.
+A device range is identified by `(device_path, offset_bytes)`. Re-adding the
+same range at the same size, including through an alias, returns its existing
+entry without mapping it again; a range overlapping an active entry is a 409.
+Disjoint ranges of one device may back several entries, which is how one CXL
+device is shared between servers or between L1 and L2. Use the returned
+`device_path` and `offset_bytes` for remove or resize; the alias is not
+registered as another path.
 
 Remove with migration:
 

@@ -149,6 +149,10 @@ class DaxBackend(StoragePluginInterface):
         if self.max_dax_size <= 0:
             raise ValueError("extra_config['dax.max_dax_size'] must be > 0")
 
+        self.offset_gb = float(extra.get("dax.offset_gb", 0))
+        if self.offset_gb < 0:
+            raise ValueError("extra_config['dax.offset_gb'] must be >= 0")
+
         if self.local_cpu_backend is None:
             raise ValueError("DaxBackend requires local_cpu_backend")
 
@@ -169,6 +173,7 @@ class DaxBackend(StoragePluginInterface):
             device_path=self.device_path,
             max_dax_size_bytes=int(self.max_dax_size * 1024**3),
             slot_bytes=max(1, full_chunk_size),
+            offset_bytes=int(self.offset_gb * 1024**3),
         )
         self.slot_bytes = self._core.slot_bytes
         self._arena_bytes = self._core.arena_bytes
