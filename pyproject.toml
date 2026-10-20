@@ -94,6 +94,8 @@ select = [
     "SLF",
     # pylint: logging call has more arguments than format placeholders
     "PLE1205",
+    # flake8-tidy-imports: banned API imports
+    "TID251",
 ]
 ignore = [
     # star imports
@@ -134,6 +136,9 @@ from-first = true
 # import-heading-thirdparty=Third Party
 # import-heading-firstparty=First Party
 # import-heading-localfolder=Local
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"pickle".msg = "Use a data-only serialization format instead."
 
 [tool.mypy]
 

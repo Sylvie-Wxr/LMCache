@@ -284,8 +284,8 @@ msgstr "``auto`` (默认) -- 同时加载两条路径。任意设备类型的工
 msgid ""
 "``lmcache_driven`` -- load only the server-driven transfer path. Supports"
 " CUDA devices (IPC) and CPU devices (SHM).  Use to skip allocating the "
-"engine-driven prepare/commit resources (inline tensor codec)."
-msgstr "``lmcache_driven`` -- 仅加载服务器驱动的传输路径。支持 CUDA 设备（IPC）和 CPU 设备（SHM）。用于跳过分配引擎驱动的准备/提交资源（内联张量编解码器）。"
+"engine-driven prepare/commit resources (pickle codec)."
+msgstr "``lmcache_driven`` -- 仅加载服务器驱动的传输路径。支持 CUDA 设备（IPC）和 CPU 设备（SHM）。用于跳过分配引擎驱动的准备/提交资源（pickle 编解码器）。"
 
 #: ../../source/mp/deployment.rst:237
 msgid ""
@@ -323,11 +323,11 @@ msgstr "``\"\"`` (空字符串)"
 
 #: ../../source/mp/deployment.rst:254
 msgid ""
-"Disable the SHM pool entirely and use the typed inline transfer "
+"Disable the SHM pool entirely and fall back to the pickle-based transfer "
 "path.  Useful when ``/dev/shm`` is unavailable or when running without "
 "``--ipc host`` in Docker."
 msgstr ""
-"完全禁用 SHM 池并使用类型化内联传输路径。当 ``/dev/shm`` 不可用或在 Docker 中未使用 ``--ipc "
+"完全禁用 SHM 池并回退到基于 pickle 的传输路径。当 ``/dev/shm`` 不可用或在 Docker 中未使用 ``--ipc "
 "host`` 时非常有用。"
 
 #: ../../source/mp/deployment.rst:257
@@ -350,9 +350,9 @@ msgstr "**示例：**"
 #~ " path.  Use when every worker is "
 #~ "a CUDA device and you want to "
 #~ "skip allocating the non-GPU resources"
-#~ " (SHM pool, inline tensor codec)."
+#~ " (SHM pool, pickle codec)."
 #~ msgstr ""
 #~ "``gpu`` -- 仅加载 GPU IPC 路径。当每个工作节点都是 "
-#~ "CUDA 设备时使用，并且您希望跳过分配非 GPU 资源（SHM 池、内联张量 "
+#~ "CUDA 设备时使用，并且您希望跳过分配非 GPU 资源（SHM 池、pickle "
 #~ "编解码器）。"
 

@@ -245,9 +245,9 @@ msgstr "[ ] 日志显示 ``Custom ops not supported for device: foo, using fallb
 #: ../../source/developer_guide/extending_lmcache/adding_a_new_device_backend.rst:180
 msgid ""
 "[ ] Engine-driven transfer works end-to-end (check the LMCache logs to "
-"confirm whether the SHM or inline sub-path is chosen — both should "
+"confirm whether the SHM or Pickle sub-path is chosen — both should "
 "succeed)."
-msgstr "[ ] 引擎驱动的传输端到端工作正常（检查 LMCache 日志以确认选择了 SHM 还是内联子路径 — 两者都应该成功）。"
+msgstr "[ ] 引擎驱动的传输端到端工作正常（检查 LMCache 日志以确认选择了 SHM 还是 Pickle 子路径 — 两者都应该成功）。"
 
 #: ../../source/developer_guide/extending_lmcache/adding_a_new_device_backend.rst:183
 msgid "[ ] Store/retrieve correctness is verified."
