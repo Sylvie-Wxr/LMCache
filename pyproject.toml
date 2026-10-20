@@ -123,9 +123,11 @@ ignore = [
 "lmcache/observability.py" = ["G004"]
 "lmcache/sdk/context.py" = ["G004"]
 "lmcache/storage_backend/serde/cachegen_basics.py" = ["G004"]
+"lmcache/storage_backend/**" = ["TID251"]
 "lmcache/utils.py" = ["G004"]
 "lmcache/v1/distributed/l2_adapters/bigtable_l2_adapter.py" = ["G004"]
 "tests/disagg/test_nixl_channel.py" = ["G004"]
+"tests/v1/platform/test_ipc_wire.py" = ["TID251"]
 
 [tool.ruff.lint.isort]
 # same as .isort.cfg

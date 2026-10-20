@@ -40,7 +40,7 @@ class DeviceIPCWrapper:
 
     Every wire-level wrapper subclasses this so they share the single
     msgspec ext code (1) registered for ``DeviceIPCWrapper``. Explicit
-    descriptor tags preserve concrete wrapper identity without loading objects.
+    descriptor tags preserve concrete wrapper identity without unpickling.
 
     Subclasses implement ``__init__`` (populate the interface fields from a
     tensor) and ``to_tensor`` (reconstruct the tensor from the handle).
@@ -194,7 +194,7 @@ class DeviceIPCWrapper:
 
     @staticmethod
     def Deserialize(data: bytes) -> "DeviceIPCWrapper":
-        """Decode a data-only IPC descriptor.
+        """Decode a data-only IPC descriptor. Legacy pickle is rejected.
 
         Args:
             data: Bytes produced by :meth:`Serialize`.

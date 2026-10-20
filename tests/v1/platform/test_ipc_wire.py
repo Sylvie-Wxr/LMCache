@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 """IPC wire security and compatibility tests; no accelerator is required."""
 
+# Standard
+from pathlib import Path
+from typing import Callable
+import pickle
+
 # Third Party
 import msgspec
 import pytest
@@ -85,14 +90,27 @@ def _decode_grpc(payload: bytes) -> DeviceIPCWrapper:
     )
 
 
+class _ExecutionMarker:
+    def __init__(self, path: Path) -> None:
+        self.path = path
+
+    def __reduce__(self) -> tuple[Callable[..., None], tuple[Path]]:
+        return Path.touch, (self.path,)
+
+
 @pytest.mark.parametrize(
     "decode", [DeviceIPCWrapper.Deserialize, _decode_zmq, _decode_grpc]
 )
-def test_untyped_descriptor_rejected_by_transports(decode) -> None:
-    """Both production transport codecs reject an untyped descriptor."""
-    payload = b"not-a-messagepack-descriptor"
+@pytest.mark.parametrize("protocol", [0, pickle.HIGHEST_PROTOCOL])
+def test_pickle_rejected_before_execution(
+    tmp_path: Path, decode, protocol: int
+) -> None:
+    """Both real transport codecs reject pickle before its callback can run."""
+    marker = tmp_path / "executed"
+    payload = pickle.dumps(_ExecutionMarker(marker), protocol=protocol)
     with pytest.raises(msgspec.DecodeError):
         decode(payload)
+    assert not marker.exists()
 
 
 @pytest.mark.parametrize("descriptor", DESCRIPTORS)

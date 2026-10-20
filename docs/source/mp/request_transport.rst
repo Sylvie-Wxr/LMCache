@@ -81,7 +81,7 @@ IPC descriptor compatibility
 ----------------------------
 
 Device IPC wrappers use versioned, data-only MessagePack descriptors in both
-transports. Legacy object descriptors are rejected; upgrade workers and servers
+transports. Legacy pickle descriptors are rejected; upgrade workers and servers
 together. MUSA handles must use MessagePack scalars, lists and string-keyed maps;
 opaque SDK objects require an explicit codec and are rejected.
 

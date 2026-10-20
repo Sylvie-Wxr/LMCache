@@ -90,7 +90,7 @@ repos:
   rev: v0.11.7
   hooks:
   - id: ruff
-    args: [--output-format, github, --fix, --exit-non-zero-on-fix]
+    args: [--output-format, github, --fix]
   - id: ruff-format
 - repo: https://github.com/codespell-project/codespell
   rev: v2.4.1

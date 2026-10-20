@@ -54,8 +54,8 @@ Colab Notebook, which can also be accessed here:
 * **GPU.** To see token dropping raise the decode batch size, tune
   `--gpu-memory-utilization` together with the number of requests. These
   examples were run on a single RTX 6000 PRO.
-* **LMCache**. The SDK can use either shared memory or typed inline transport.
-  This example uses shared memory. To transfer the query tensors,
+* **LMCache**. The SDK can use either shared memory transport or pickle 
+  transport. This example uses shared memory. To transfer the query tensors,
   load the qstore server module when starting LMCache:
   `--server-module '{"module_path": "lmcache.v1.multiprocess.plugin_modules.qstore"}'`.
 * **vLLM** with below patch.
