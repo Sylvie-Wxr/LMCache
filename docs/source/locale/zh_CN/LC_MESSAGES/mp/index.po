@@ -288,12 +288,12 @@ msgid ""
 " the PREPARE/COMMIT transfer path). Loaded only when ``--supported-"
 "transfer-mode`` is ``engine_driven`` or ``auto``. Returns a "
 "``RegisterEngineDrivenContextResponse`` carrying the SHM segment name and"
-" pool size when the SHM path is in use (empty for the pickle path)."
+" pool size when the SHM path is in use (empty for the inline path)."
 msgstr ""
 "注册一个引擎驱动的 KV Cache 上下文（使用 PREPARE/COMMIT 传输路径的 CPU/加速器工作线程）。仅在 "
 "``--supported-transfer-mode`` 为 ``engine_driven`` 或 ``auto`` 时加载。当使用 SHM "
 "路径时，返回一个 ``RegisterEngineDrivenContextResponse``\\ ，携带 SHM 段名称和池大小（对于 "
-"pickle 路径为空）。"
+"内联路径为空）。"
 
 #: ../../source/mp/index.rst:170
 msgid "``UNREGISTER_KV_CACHE_ENGINE_DRIVEN_CONTEXT``"
@@ -364,10 +364,10 @@ msgstr "``COMMIT_STORE``"
 
 #: ../../source/mp/index.rst:190
 msgid ""
-"(Engine-driven path) Worker commits the chunk's serialized bytes (pickle "
+"(Engine-driven path) Worker commits the chunk's serialized bytes (typed inline "
 "path) or releases the prepared SHM slot (SHM path) so the server can "
 "persist into L1 storage."
-msgstr "（引擎驱动路径）工作线程提交块的序列化字节（pickle 路径），或释放已准备好的共享内存槽（SHM 路径），以便服务器将数据持久化到 L1 存储。"
+msgstr "（引擎驱动路径）工作线程提交块的序列化字节（类型化内联路径），或释放已准备好的共享内存槽（SHM 路径），以便服务器将数据持久化到 L1 存储。"
 
 #: ../../source/mp/index.rst:193
 msgid "``PREPARE_RETRIEVE``"
@@ -376,9 +376,9 @@ msgstr "``PREPARE_RETRIEVE``"
 #: ../../source/mp/index.rst:195
 msgid ""
 "(Engine-driven path) Worker asks the server to prepare the retrieval "
-"payload for a key. The pickle path returns the bytes inline; the SHM path"
+"payload for a key. The typed inline path returns the bytes inline; the SHM path"
 " returns slot info so the worker can read from shared memory."
-msgstr "（引擎驱动路径）工作线程请求服务器为指定键准备检索负载。pickle 路径直接内联返回字节；SHM 路径返回槽位信息，供工作线程从共享内存中读取。"
+msgstr "（引擎驱动路径）工作线程请求服务器为指定键准备检索负载。类型化内联路径直接返回字节；SHM 路径返回槽位信息，供工作线程从共享内存中读取。"
 
 #: ../../source/mp/index.rst:199
 msgid "``COMMIT_RETRIEVE``"

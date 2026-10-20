@@ -800,13 +800,6 @@ class VmmCudaIPCWrapper(DeviceIPCWrapper):
                         base_ptr,
                     )
 
-    def __getstate__(self) -> dict[str, object]:
-        """Pickle without process-local state (fd, registry references)."""
-        state = dict(self.__dict__)
-        state["_fd"] = None
-        state["_opens"] = 0
-        return state
-
     def _export_allocation(self, alloc_handle: object) -> "tuple[str, int | bytes]":
         """Export ``alloc_handle`` as its allocation's shareable form.
 

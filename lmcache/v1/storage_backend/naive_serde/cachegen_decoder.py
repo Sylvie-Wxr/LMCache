@@ -66,14 +66,7 @@ class CacheGenDeserializer(Deserializer):
     @_lmcache_nvtx_annotate
     def deserialize(self, buffer_memory_obj: BytesBufferMemoryObj) -> MemoryObj:
         encoder_output = CacheGenGPUEncoderOutput.from_bytes(
-            buffer_memory_obj.byte_array
-        )
-
-        encoder_output.max_tensors_key = encoder_output.max_tensors_key.to(
-            torch_device_type
-        )
-        encoder_output.max_tensors_value = encoder_output.max_tensors_value.to(
-            torch_device_type
+            buffer_memory_obj.byte_array, device=torch_device_type
         )
 
         ntokens = encoder_output.max_tensors_key.shape[1]

@@ -80,10 +80,10 @@ needed:
   ``ipc_wrapper_cls`` returns the wrapper — zero changes to the
   dispatcher.
 
-## Backward compatibility
+## Protocol compatibility
 
-- ZMQ ext code 1 and the gRPC bytes field remain unchanged, but their contents are versioned MessagePack. Old pickle payloads are rejected with no fallback: upgrade clients and servers together.
-- MUSA handles must contain only MessagePack scalars, lists and string-keyed maps. Opaque SDK objects require an explicit data codec; they are rejected rather than pickled.
+- ZMQ ext code 1 and the gRPC bytes field retain their field numbers, but their contents are versioned MessagePack. Untyped legacy payloads are rejected with no fallback: upgrade clients and servers together.
+- MUSA handles must contain only MessagePack scalars, lists and string-keyed maps. Opaque SDK objects require an explicit data codec and are rejected.
 - Additional wrapper implementations require an explicit descriptor and local allowlist entry; arbitrary subclasses are not reconstructed from network input.
 - `MusaIPCWrapper` keeps the receiver-side `open_tensor()` owner alive locally and excludes that owner from serialized state.
 - `CudaIPCWrapper` / `RawCudaIPCWrapper` keep their names, fields, and behavior; only their base class changed. Existing callers and the TRT-LLM adapter are unaffected.
@@ -91,12 +91,12 @@ needed:
 
 ## Security boundary
 
-CVE-2026-105192 reached `pickle.loads` through msgpack ext code 1 while
-`REGISTER_KV_CACHE` arguments were being decoded, before handler validation.
-The transport did not authenticate the sender. Typed descriptors remove this
-Python object execution path from both ZMQ and gRPC. Unknown fields, versions,
-tags and invalid metadata are rejected; receiver-local fds, owners and mapping
-counts are never restored from wire input.
+CVE-2026-105192 reached an arbitrary Python object decoder through msgpack ext
+code 1 while `REGISTER_KV_CACHE` arguments were being decoded, before handler
+validation. The transport did not authenticate the sender. Typed descriptors
+remove this object-execution path from both ZMQ and gRPC. Unknown fields,
+versions, tags and invalid metadata are rejected; receiver-local fds, owners
+and mapping counts are never restored from wire input.
 
 This descriptor change does not add transport authentication. Engine-driven
 `cpu_data` and retrieve responses use their own typed inline tensor codec; the

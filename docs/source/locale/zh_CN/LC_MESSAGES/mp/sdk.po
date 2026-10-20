@@ -93,8 +93,8 @@ msgid ""
 "To start the LMCache server with shared-memory transfer enabled, pass "
 "``--shm-name`` and disable lazy L1 allocation with ``--no-l1-use-lazy``. "
 "If shared memory is unavailable and these flags are not specified, the "
-"SDK falls back to pickle."
-msgstr "要启动启用共享内存传输的 LMCache 服务器，请传递 ``--shm-name`` 并使用 ``--no-l1-use-lazy`` 禁用懒惰的 L1 分配。如果共享内存不可用且未指定这些标志，SDK 将回退到 pickle。"
+"SDK falls back to the typed inline tensor codec."
+msgstr "要启动启用共享内存传输的 LMCache 服务器，请传递 ``--shm-name`` 并使用 ``--no-l1-use-lazy`` 禁用懒惰的 L1 分配。如果共享内存不可用且未指定这些标志，SDK 将回退到类型化内联张量编解码器。"
 
 #: ../../source/mp/sdk.rst:64
 msgid "Then start vLLM with the LMCache MP connector."

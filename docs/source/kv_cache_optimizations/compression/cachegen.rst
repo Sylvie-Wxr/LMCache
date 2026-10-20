@@ -10,6 +10,12 @@ CacheGen
 
 Cachegen leverages KV cache's distributional properties to encode a KV cache into more compact bitstream representations with negligible decoding overhead.
 
+.. important::
+
+   CacheGen payloads use a versioned, data-only tensor container. This format
+   is not compatible with CacheGen payloads written by older LMCache versions;
+   clear existing CacheGen entries from remote storage when upgrading.
+
 
 Configuring CacheGen in LMCache
 ---------------------------------------

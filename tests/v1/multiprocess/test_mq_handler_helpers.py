@@ -2,8 +2,8 @@
 """
 Helper handler functions for MessageQueue tests.
 
-These handlers are defined at module level to allow them to be pickled
-and passed between processes during multiprocessing tests.
+These handlers are defined at module level so worker processes can import them
+when multiprocessing tests pass requests between processes.
 """
 
 # First Party

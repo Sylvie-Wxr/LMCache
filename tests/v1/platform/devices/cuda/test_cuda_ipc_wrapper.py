@@ -153,8 +153,8 @@ def test_raw_wrapper_rejects_unpermutable_noncontiguous() -> None:
 def _pool_exporter(conn: Connection, pool_mib: int, exit_after_send: bool) -> None:
     """Child: export wrappers for two interior views of one pool.
 
-    Sends ``(wrapper_a, wrapper_b)`` pickled, then either exits
-    immediately (dead-exporter case) or holds the pool until released.
+    Sends two serialized wrappers, then either exits immediately
+    (dead-exporter case) or holds the pool until released.
     """
     torch.cuda.init()
     torch.cuda.set_device(0)
